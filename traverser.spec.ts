@@ -36,29 +36,29 @@ test("traverser", () => {
   const callArr: any = [];
   const visitor: Visitor = {
     Program: {
-      enter() {
-        callArr.push("program-enter");
+      enter(node, parent) {
+        callArr.push(["program-enter", node.type, ""]);
       },
-      exit() {
-        callArr.push("program-exit");
+      exit(node, parent) {
+        callArr.push(["program-exit", node.type, ""]);
       },
     },
 
     CallExpression: {
-      enter() {
-        callArr.push("callExpression-enter");
+      enter(node, parent) {
+        callArr.push(["callExpression-enter", node.type, parent!.type]);
       },
-      exit() {
-        callArr.push("callExpression-exit");
+      exit(node, parent) {
+        callArr.push(["callExpression-exit", node.type, parent!.type]);
       },
     },
 
     NumberLiteral: {
-      enter() {
-        callArr.push("numberLiteral-enter");
+      enter(node, parent) {
+        callArr.push(["numberLiteral-enter", node.type, parent!.type]);
       },
-      exit() {
-        callArr.push("numberLiteral-exit");
+      exit(node, parent) {
+        callArr.push(["numberLiteral-exit", node.type, parent!.type]);
       },
     },
   };
@@ -66,17 +66,21 @@ test("traverser", () => {
   traverser(ast, visitor);
 
   expect(callArr).toEqual([
-    "program-enter",
-    "callExpression-enter",
-    "numberLiteral-enter",
-    "numberLiteral-exit",
-    "callExpression-enter",
-    "numberLiteral-enter",
-    "numberLiteral-exit",
-    "numberLiteral-enter",
-    "numberLiteral-exit",
-    "callExpression-exit",
-    "callExpression-exit",
-    "program-exit",
+    ["program-enter", NodeTypes.Program, ""],
+    ["callExpression-enter", NodeTypes.CallExpression, NodeTypes.Program],
+    ["numberLiteral-enter", NodeTypes.NumberLiteral, NodeTypes.CallExpression],
+    ["numberLiteral-exit", NodeTypes.NumberLiteral, NodeTypes.CallExpression],
+    [
+      "callExpression-enter",
+      NodeTypes.CallExpression,
+      NodeTypes.CallExpression,
+    ],
+    ["numberLiteral-enter", NodeTypes.NumberLiteral, NodeTypes.CallExpression],
+    ["numberLiteral-exit", NodeTypes.NumberLiteral, NodeTypes.CallExpression],
+    ["numberLiteral-enter", NodeTypes.NumberLiteral, NodeTypes.CallExpression],
+    ["numberLiteral-exit", NodeTypes.NumberLiteral, NodeTypes.CallExpression],
+    ["callExpression-exit", NodeTypes.CallExpression, NodeTypes.CallExpression],
+    ["callExpression-exit", NodeTypes.CallExpression, NodeTypes.Program],
+    ["program-exit", NodeTypes.Program, ""],
   ]);
 });
