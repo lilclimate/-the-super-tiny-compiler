@@ -1,7 +1,7 @@
 import { expect, test  } from "vitest";
 import { NodeTypes, parser } from "./parser";
 import { TokenTypes } from "./tokenizer";
-test.skip('parser', () => {
+test('parser', () => {
 	const tokens = 
     [
       { type: TokenTypes.Paren,  value: '('        },
@@ -16,21 +16,21 @@ test.skip('parser', () => {
     ];	
 
 	const ast = {
-      type: 'Program',
+      type: NodeTypes.Root,
       body: [{
-        type: 'CallExpression',
+        type: NodeTypes.CallExpression,
         name: 'add',
         params: [{
-          type: 'NumberLiteral',
+          type: NodeTypes.Number,
           value: '2',
         }, {
-          type: 'CallExpression',
+          type: NodeTypes.CallExpression,
           name: 'subtract',
           params: [{
-            type: 'NumberLiteral',
+            type: NodeTypes.Number,
             value: '4',
           }, {
-            type: 'NumberLiteral',
+            type: NodeTypes.Number,
             value: '2',
           }]
         }]
