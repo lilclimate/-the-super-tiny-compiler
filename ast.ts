@@ -7,15 +7,15 @@ export enum NodeTypes {
 	CallExpression = "CallExpression"
 }
 
-export type ChildNode = NumberNode | CallExpressionNode| StringLiteralNode;
+export type ChildNode = |NumberLiteralNode | CallExpressionNode| StringLiteralNode;
 
-interface Node {
+export interface Node {
 	type: NodeTypes;
 }
 export interface RootNode extends Node {
 	body: ChildNode[];
 }
-export interface NumberNode extends Node {
+export interface NumberLiteralNode extends Node {
 	value: string;
 }
 

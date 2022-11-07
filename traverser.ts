@@ -28,15 +28,15 @@ export function traverser(rootNode: RootNode, visitor: Visitor) {
 			visitorObj.enter(node, parent);
 
 		switch (node.type) {
-		case NodeTypes.NumberLiteral:
-			console.log('number', node);
-			break;
-		case NodeTypes.CallExpression:
-			traverseArray(node.params, node);
-			break;
-		case NodeTypes.Program:
-			traverseArray(node.body, node);
-			break;
+			case NodeTypes.NumberLiteral:
+				console.log('number', node);
+				break;
+			case NodeTypes.CallExpression:
+				traverseArray(node.params, node);
+				break;
+			case NodeTypes.Program:
+				traverseArray(node.body, node);
+				break;
 		}
 
 		if (visitorObj)
