@@ -6,16 +6,23 @@ export enum NodeTypes {
 	StringLiteral = "StringLiteral",
 	CallExpression = "CallExpression"
 }
+
+export type ChildNode = NumberNode | CallExpressionNode| StringLiteralNode;
+
 interface Node {
 	type: NodeTypes;
 }
-type ChildNode = NumberNode | CallExpressionNode;
 export interface RootNode extends Node {
 	body: ChildNode[];
 }
 export interface NumberNode extends Node {
 	value: string;
 }
+
+export interface StringLiteralNode extends Node {
+  value: string;
+}
+
 export interface CallExpressionNode extends Node {
 	name: string;
 	params: ChildNode[];
