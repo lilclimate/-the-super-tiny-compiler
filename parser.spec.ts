@@ -1,5 +1,6 @@
 import { expect, test  } from "vitest";
-import { NodeTypes, parser } from "./parser";
+import { NodeTypes } from "./ast";
+import { parser } from "./parser";
 import { TokenTypes } from "./tokenizer";
 test('parser', () => {
 	const tokens = 
@@ -16,21 +17,21 @@ test('parser', () => {
     ];	
 
 	const ast = {
-      type: NodeTypes.Root,
+      type: NodeTypes.Program,
       body: [{
         type: NodeTypes.CallExpression,
         name: 'add',
         params: [{
-          type: NodeTypes.Number,
+          type: NodeTypes.NumberLiteral,
           value: '2',
         }, {
           type: NodeTypes.CallExpression,
           name: 'subtract',
           params: [{
-            type: NodeTypes.Number,
+            type: NodeTypes.NumberLiteral,
             value: '4',
           }, {
-            type: NodeTypes.Number,
+            type: NodeTypes.NumberLiteral,
             value: '2',
           }]
         }]
@@ -46,9 +47,9 @@ test('number', () => {
 	}];
 
 	const ast = {
-		type: NodeTypes.Root,
+		type: NodeTypes.Program,
 		body: [{
-			type: NodeTypes.Number,
+			type: NodeTypes.NumberLiteral,
 			value: "2"
 		}]
 	};
@@ -66,15 +67,15 @@ test('callExpression', () => {
     ];	
 
 	const ast = {
-      type: NodeTypes.Root,
+      type: NodeTypes.Program,
       body: [{
         type: NodeTypes.CallExpression,
         name: 'add',
         params: [{
-          type: NodeTypes.Number,
+          type: NodeTypes.NumberLiteral,
           value: '2',
         }, {
-          type: NodeTypes.Number,
+          type: NodeTypes.NumberLiteral,
           value: '4',
         }]
       }]
@@ -98,15 +99,15 @@ test('two callExpression', () => {
     ];	
 
 	const ast = {
-      type: NodeTypes.Root,
+      type: NodeTypes.Program,
       body: [{
         type: NodeTypes.CallExpression,
         name: 'add',
         params: [{
-          type: NodeTypes.Number,
+          type: NodeTypes.NumberLiteral,
           value: '2',
         }, {
-          type: NodeTypes.Number,
+          type: NodeTypes.NumberLiteral,
           value: '4',
         }]
 			},
@@ -114,10 +115,10 @@ test('two callExpression', () => {
         type: NodeTypes.CallExpression,
         name: 'add',
         params: [{
-          type: NodeTypes.Number,
+          type: NodeTypes.NumberLiteral,
           value: '3',
         }, {
-          type: NodeTypes.Number,
+          type: NodeTypes.NumberLiteral,
           value: '5',
         }]
       }]

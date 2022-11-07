@@ -1,30 +1,5 @@
+import { CallExpressionNode, NodeTypes, NumberNode, RootNode } from "./ast";
 import { Token, TokenTypes } from "./tokenizer";
-
-
-export enum NodeTypes {
-	Root,
-	Number,
-	CallExpression
-}
-
-interface Node { 
-	type: NodeTypes
-}
-
-type ChildNode = NumberNode | CallExpressionNode
-
-interface RootNode extends Node { 
-	body: ChildNode[]
-}
-
-interface NumberNode extends Node { 
-	value: string
-}
-
-interface CallExpressionNode extends Node { 
-	name: string,
-	params: ChildNode[]
-}
 
 
 export function parser(tokens: Token[]) { 
@@ -70,14 +45,14 @@ function createCallExpressionNode(name: string): CallExpressionNode {
 
 function createNumberNode(value: string): NumberNode {
 	return {
-		type: NodeTypes.Number,
+		type: NodeTypes.NumberLiteral,
 		value,
 	};
 }
 
 function createRootNode(): RootNode {
 	return {
-		type: NodeTypes.Root,
+		type: NodeTypes.Program,
 		body: [],
 	};
 }
