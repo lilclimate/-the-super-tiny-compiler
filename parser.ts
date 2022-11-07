@@ -28,25 +28,32 @@ interface CallExpressionNode extends Node {
 
 
 export function parser(tokens: Token[]) { 
-	const rootNode = createRootNode();
 	let current = 0;
-	let token = tokens[current];
-	if (token.type === TokenTypes.Number) 
-		rootNode.body.push(createNumberNode(token.value));
-	
-	if (token.type === TokenTypes.Paren && token.value === '(') { 
-		token = tokens[++current];
-		const node = createCallExpressionNode(token.value);
+	const rootNode = createRootNode();
 
-		token = tokens[++current];
-		while (!(token.type === TokenTypes.Paren && token.value === ')')) { 
-			if (token.type === TokenTypes.Number) 
-				node.params.push(createNumberNode(token.value));
-				token = tokens[++current];
+	function walk() { 
+		let token = tokens[current];
+		if (token.type === TokenTypes.Number) { 
+			current++;
+			return createNumberNode(token.value);
 		}
-		current++;
-		rootNode.body.push(node);
+
+		if (token.type === TokenTypes.Paren && token.value === '(') { 
+			token = tokens[++current];
+			const node = createCallExpressionNode(token.value);
+		
+			token = tokens[++current];
+			while (!(token.type === TokenTypes.Paren && token.value === ')')) { 
+				node.params.push(walk());
+				token = tokens[current];
+			}
+			current++;
+			return node;
+		}
+		throw new Error(`undefined token: ${token}`);
 	}
+	
+	rootNode.body.push(walk());
 	return rootNode;
 	
 }
