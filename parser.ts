@@ -53,7 +53,10 @@ export function parser(tokens: Token[]) {
 		throw new Error(`undefined token: ${token}`);
 	}
 	
-	rootNode.body.push(walk());
+	while(current < tokens.length) { 
+		rootNode.body.push(walk());
+	}
+
 	return rootNode;
 	
 }
