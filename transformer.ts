@@ -1,5 +1,5 @@
-import { CallExpressionNode, NodeTypes, RootNode } from "./ast";
-import { traverser } from "./traverser";
+import { NodeTypes, RootNode } from "./ast";
+import { ParentNode, traverser } from "./traverser";
 
 export function transformer(ast: RootNode) { 
 	const newAst = {
@@ -41,7 +41,7 @@ export function transformer(ast: RootNode) {
 	return newAst;
 }
 
-function pushNode(parent: RootNode|CallExpressionNode|undefined, data: any) {
+function pushNode(parent: ParentNode, data: any) {
 	if (parent?.type !== NodeTypes.CallExpression) {
 		data = {
 			type: "ExpressionStatement",
