@@ -3,7 +3,7 @@ import { NodeTypes } from "./ast";
 export function codegen(node: any) { 
 	switch (node.type) {
 		case NodeTypes.Program:
-			return codegen(node.body[0]);
+			return node.body.map(codegen).join("");
 		case "ExpressionStatement":
 			return codegen(node.expression) + ';';
 		case NodeTypes.NumberLiteral:

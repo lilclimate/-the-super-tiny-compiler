@@ -60,7 +60,7 @@ test("codegen", () => {
   expect(codegen(ast)).toMatchInlineSnapshot('"add(2, subtract(4, 2));"');
 });
 
-test.skip("two ExpressionStatement", () => {
+test("two ExpressionStatement", () => {
   const ast = {
     type: NodeTypes.Program,
     body: [
