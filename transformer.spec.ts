@@ -74,6 +74,32 @@ test("transformer", () => {
   expect(transformer(originalAST)).toEqual(transformedAST);
 });
 
+test("NumberLiteral", () => {
+  const originalAST:RootNode = {
+    type: NodeTypes.Program,
+    body: [
+      {
+        type: NodeTypes.NumberLiteral,
+        value: "2",
+      },
+    ],
+  };
+
+  const transformedAST = {
+    type: "Program",
+    body: [
+      {
+        type: "ExpressionStatement",
+        expression: {
+          type: "NumberLiteral",
+          value: "2",
+        },
+      },
+    ],
+  };
+  expect(transformer(originalAST)).toEqual(transformedAST);
+});
+
 test("callExpresstion add();", () => {
   const originalAST:RootNode = {
     type: NodeTypes.Program,
