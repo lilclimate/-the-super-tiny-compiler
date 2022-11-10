@@ -17,7 +17,7 @@ test('NumberLiteral', () => {
 
   expect(codegen(ast)).toMatchInlineSnapshot('"2;"');
 });
-test.skip("codegen", () => {
+test("codegen", () => {
   const ast = {
     type: NodeTypes.Program,
     body: [
