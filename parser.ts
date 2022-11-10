@@ -1,4 +1,4 @@
-import { CallExpressionNode, NodeTypes, NumberNode, RootNode } from "./ast";
+import { CallExpressionNode, NodeTypes, NumberLiteralNode, RootNode } from "./ast";
 import { Token, TokenTypes } from "./tokenizer";
 
 
@@ -10,7 +10,7 @@ export function parser(tokens: Token[]) {
 		let token = tokens[current];
 		if (token.type === TokenTypes.Number) { 
 			current++;
-			return createNumberNode(token.value);
+			return createNumberLiteralNode(token.value);
 		}
 
 		if (token.type === TokenTypes.Paren && token.value === '(') { 
@@ -43,7 +43,7 @@ function createCallExpressionNode(name: string): CallExpressionNode {
 	};
 }
 
-function createNumberNode(value: string): NumberNode {
+function createNumberLiteralNode(value: string): NumberLiteralNode {
 	return {
 		type: NodeTypes.NumberLiteral,
 		value,
