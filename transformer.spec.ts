@@ -1,7 +1,7 @@
 import { RootNode, NodeTypes } from "./ast";
 import { test, expect } from "vitest";
 import {transformer} from './transformer'
-test.skip("transformer", () => {
+test("transformer", () => {
   const originalAST: RootNode = {
     type: NodeTypes.Program,
     body: [

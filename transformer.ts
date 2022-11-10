@@ -23,16 +23,32 @@ export function transformer(ast: RootNode) {
 						},
 						arguments: [],
 					};
+					node.context = expressionNode.arguments;
 
-					expressionNode = {
-						type: "ExpressionStatement",
-						expression: expressionNode,
-					};
+					if (parent?.type !== NodeTypes.CallExpression) {
+						expressionNode = {
+							type: "ExpressionStatement",
+							expression: expressionNode,
+						};
+					}
 
 					parent?.context?.push(expressionNode);
 				}
 			}
-		}		
+		},
+		NumberLiteral: {
+			enter(node, parent) { 
+				if (node.type === NodeTypes.NumberLiteral) {
+					const numberNode = {
+						type: node.type,
+						value: node.value,
+					};
+					parent?.context?.push(numberNode);
+				}
+			}
+		},
 	});
+
+	console.log('newAst: ', JSON.stringify(newAst));
 	return newAst;
 }
