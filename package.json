@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "main": "index.js",
   "scripts": {
-    "test": "vitest --run"
+    "test": "vitest --run",
+    "test-watch": "vitest"
   },
   "repository": "git@github.com:lilclimate/-the-super-tiny-compiler.git",
   "author": "lil climate <lilclimate@gmail.com>",

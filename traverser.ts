@@ -44,7 +44,7 @@ export function traverser(rootNode: RootNode, visitor: Visitor) {
 				break;
 		}
 
-		if (visitorObj)
+		if (visitorObj && visitorObj.exit)
 			visitorObj.exit(node, parent);
 	}
 
