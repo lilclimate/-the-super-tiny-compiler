@@ -13,9 +13,8 @@ export function transformer(ast: RootNode) {
 		CallExpression: {
 			enter(node, parent) {
 				if (node.type !== NodeTypes.CallExpression) return;
-				let expressionNode:any;
 
-				expressionNode = {
+				const expressionNode = {
 					type: node.type,	
 					callee: {
 						type: "Identifier",
@@ -24,14 +23,6 @@ export function transformer(ast: RootNode) {
 					arguments: [],
 				};
 				node.context = expressionNode.arguments;
-
-				if (parent?.type !== NodeTypes.CallExpression) {
-					expressionNode = {
-						type: "ExpressionStatement",
-						expression: expressionNode,
-					};
-				}
-
 				pushNode(parent, expressionNode);
 			}
 		},
@@ -51,5 +42,11 @@ export function transformer(ast: RootNode) {
 }
 
 function pushNode(parent: RootNode|CallExpressionNode|undefined, data: any) {
+	if (parent?.type !== NodeTypes.CallExpression) {
+		data = {
+			type: "ExpressionStatement",
+			expression: data,
+		};
+	}
 	parent?.context?.push(data);
 }
